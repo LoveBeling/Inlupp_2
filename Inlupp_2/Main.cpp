@@ -1,7 +1,9 @@
 #include "Queue.h"
+
+
 void main()
 {
-	Queue *que = new Queue;
+	Queue<int> *que = new Queue<int>;
 	que->EnQueue(30);
 	que->EnQueue(40);
 	que->EnQueue(50);

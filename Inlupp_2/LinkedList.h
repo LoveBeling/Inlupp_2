@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 template<class T>
-class DoubleLinkedList
+class LinkedList
 {
 public:
 	void InsertAtIndex(T data, int Index)
@@ -14,34 +14,34 @@ public:
 			NewNode->data = data;
 			NewNode->index = 0;
 			NewNode->next = nullptr;
-			NewNode->prev = nullptr;
 			head = NewNode;
 			return;
 		}
 		else if (Index == 0)
 		{
-			NewNode->index = 0;
 			NewNode->data = data;
-			head->index = 1;
 			NewNode->next = head;
-			head->prev = NewNode;
-			NewNode->prev = nullptr;
 			head = NewNode;
 			ResetIndex();
 			return;
 		}
 		else if (Index == lastIndex)
 		{
+			struct Node *prev = nullptr;
 			struct Node *current = head;
+			int prevIndex = Index;
+			prevIndex = prevIndex - 1;
 			while (current != nullptr)
 			{
+				if (current->index == prevIndex)
+				{
+					prev = current;
+				}
 				if (current->index == Index)
 				{
 					NewNode->data = data;
 					NewNode->next = current;
-					NewNode->prev = current->prev;
-					current->prev->next = NewNode;
-					current->next = nullptr;
+					prev->next = NewNode;
 					break;
 				}
 				current = current->next;
@@ -49,16 +49,22 @@ public:
 		}
 		else
 		{
+			struct Node *prev = nullptr;
 			struct Node *current = head;
+			int prevIndex = Index;
+			prevIndex = prevIndex - 1;
 			while (current != nullptr)
 			{
+				if (current->index == prevIndex)
+				{
+					prev = current;
+				}
 				if (current->index == Index)
 				{
 					NewNode->data = data;
 					NewNode->index = Index;
 					NewNode->next = current;
-					NewNode->prev = current->prev;
-					current->prev->next = NewNode;
+					prev->next = NewNode;
 					break;
 				}
 				current = current->next;
@@ -74,20 +80,26 @@ public:
 		if (Index == 0)
 		{
 			struct Node *nexthead = head->next;
-			head->next->prev = nullptr;
 			free(head);
 			head = nexthead;
 			ResetIndex();
 			return;
 		}
-		else if(lastIndex == Index)
+		else if (lastIndex == Index)
 		{
+			struct Node *prev = nullptr;
 			struct Node *current = head;
+			int prevIndex = Index;
+			prevIndex--;
 			while (current != nullptr)
 			{
+				if (current->index == prevIndex)
+				{
+					prev = current;
+				}
 				if (current->index == Index)
 				{
-					current->prev->next = nullptr;
+					prev->next = nullptr;
 					free(current);
 					break;
 				}
@@ -96,13 +108,21 @@ public:
 		}
 		else
 		{
+			struct Node *prev = nullptr;
 			struct Node *current = head;
+			int prevIndex = Index;
+			prevIndex = prevIndex - 1;
 			while (current != nullptr)
 			{
+				if (current->index == prevIndex)
+				{
+					prev = current;
+				}
 				if (current->index == Index)
 				{
-					current->next->prev = current->prev;
-					current->prev->next = current->next;
+					/*current->next->prev = current->prev;
+					current->prev->next = current->next;*/
+					prev->next = current->next;
 					free(current);
 					ResetIndex();
 					break;
@@ -125,7 +145,7 @@ public:
 			}
 			current = current->next;
 		}
- 	}
+	}
 	int Size()
 	{
 		struct Node *current = head;
@@ -150,13 +170,13 @@ public:
 
 
 	}
+
 private:
 	struct Node {
 		T data;
 		int index;
 		struct Node *next;
-		struct Node *prev;
 	};
-
 	struct Node *head = nullptr;
 };
+	

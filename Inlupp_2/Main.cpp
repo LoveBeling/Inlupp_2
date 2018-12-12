@@ -1,18 +1,17 @@
 #include "Queue.h"
+#include "DoubleLinkedList.h"
+#include "Stack.h"
+#include "LinkedList.h"
 
 
 void main()
 {
-	Queue<int> *que = new Queue<int>;
-	que->EnQueue(30);
-	que->EnQueue(40);
-	que->EnQueue(50);
-	que->EnQueue(60);
-	int front = que->GetFront();
-	que->DeQueue();
-	int newfront = que->GetFront();
-	que->DeQueue();
-	int newnewfront = que->GetFront();
-	que->DeQueue();
-	int newnewnewfront = que->GetFront();
+	LinkedList<int> *dll = new LinkedList<int>;
+	dll->InsertAtIndex(1, 0);
+	dll->InsertAtIndex(2, 0);
+	dll->InsertAtIndex(3, 0);
+	dll->InsertAtIndex(4, 2);
+	int lastIndex = dll->Getdata(3);
 }
+
+//2,3,4,5
